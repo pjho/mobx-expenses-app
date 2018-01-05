@@ -4,15 +4,22 @@ import { ExpenseModel } from "./ExpenseModel";
 
 export class ExpenseListModel {
   @observable expenses = [];
+  @observable spenders = [];
 
   // @computed
-  // get unfinishedTodoCount() {
-  //   return this.todos.filter(todo => !todo.finished).length;
-  // }
+  totalSpendForUser(spender) {
+    return this.expenses
+      .filter(ex => ex.spender === spender)
+      .reduce((total, ex) => (total + ex.amount), 0)
+  }
 
   @action
   addExpense(amount, description, spender) {
     this.expenses.push(new ExpenseModel(amount, description, spender));
-    console.log(this.expenses.length)
+  }
+
+  @action
+  addSpender(name) {
+    this.spenders.push(name) //.sort();
   }
 }

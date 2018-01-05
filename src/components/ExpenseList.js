@@ -1,15 +1,18 @@
 import React, { Component, Fragment } from "react";
 import { observable, action } from "mobx";
-import { observer } from "mobx-react";
+import { observer, inject } from "mobx-react";
 
 import { Expense } from './Expense'
+import { TotalsReport } from './TotalsReport'
 
+@inject('store')
 @observer
 export class ExpenseList extends Component {
   render() {
     return (
       <Fragment>
         <h4>Expenses</h4>
+        <TotalsReport />
         <table className="table table-striped table-hover">
           <thead>
             <tr>
@@ -21,12 +24,13 @@ export class ExpenseList extends Component {
           </thead>
           <tbody>
           {
-            this.props.expenses.map(exp => (
+            this.props.store.expenses.map(exp => (
               <Expense key={exp.id} expense={exp} />
             ))
           }
           </tbody>
         </table>
+
       </Fragment>
     )
   }
