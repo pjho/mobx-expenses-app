@@ -20,6 +20,6 @@ export class ExpenseListModel {
 
   @action
   addSpender(name) {
-    this.spenders.push(name) //.sort();
+    this.spenders = this.spenders.concat([name]).sort()
   }
 }
