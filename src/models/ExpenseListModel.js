@@ -19,7 +19,23 @@ export class ExpenseListModel {
   }
 
   @action
+  deleteExpense(id) {
+    const idx = this.expenses.findIndex(exp => exp.id === id)
+    if (idx > -1) {
+      this.expenses.splice(idx, 1)
+    }
+  }
+
+  @action
   addSpender(name) {
     this.spenders = this.spenders.concat([name]).sort()
+  }
+
+  @action
+  deleteSpender(name) {
+    const idx = this.spenders.indexOf(name)
+    if (idx > -1) {
+      this.spenders.splice(idx, 1)
+    }
   }
 }
