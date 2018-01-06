@@ -10,14 +10,16 @@ export class TotalsReport extends Component {
   render() {
     return (
       <div>
-        { this.props.store.spenders.map(spender => (
-            <span key={ spender } style={{marginRight: '10px'}}>
-              <strong>{ spender }: </strong>
-              ${ this.props.store.totalSpendForUser(spender) }
-            </span>
-        ))}
+        <h4>Report</h4>
+        <div>
+          { this.props.store.spenders.map(spender => (
+              <div key={ spender } style={{marginRight: '10px'}}>
+                <strong>{ spender }: </strong>
+                ${ this.props.store.totalSpendForUser(spender) }
+              </div>
+          ))}
+        </div>
       </div>
-
     )
   }
 }

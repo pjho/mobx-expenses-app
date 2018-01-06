@@ -3,22 +3,29 @@ import { observable, action } from "mobx";
 import { observer, inject } from "mobx-react";
 
 import { Expense } from './Expense'
-import { TotalsReport } from './TotalsReport'
 
-@inject('store')
+@inject('store', 'expenseForm')
 @observer
 export class ExpenseList extends Component {
   render() {
     return (
       <Fragment>
-        <h4>Expenses</h4>
-        <TotalsReport />
+        <h4>
+          Expenses
+          &nbsp;
+          <button
+            onClick={ () => this.props.expenseForm.show() }
+            className='btn btn-sm btn--success'
+          >
+            + add expense
+          </button>
+        </h4>
         <table className="table table-striped table-hover">
           <thead>
             <tr>
               <th>Amount</th>
               <th>Description</th>
-              <th>Person</th>
+              <th>Spender</th>
               <th></th>
             </tr>
           </thead>
@@ -30,7 +37,6 @@ export class ExpenseList extends Component {
           }
           </tbody>
         </table>
-
       </Fragment>
     )
   }

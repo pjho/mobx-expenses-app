@@ -5,7 +5,7 @@ import DevTools from "mobx-react-devtools";
 
 import { ExpenseList } from './components/ExpenseList'
 import { ExpenseForm } from './components/ExpenseForm'
-import { SpenderForm } from './components/SpenderForm'
+import { TotalsReport } from './components/TotalsReport'
 
 import { ExpenseListModel } from './models/ExpenseListModel'
 import { ExpenseFormModel } from './models/ExpenseFormModel'
@@ -17,7 +17,6 @@ const expenseForm = new ExpenseFormModel();
 
 const stores = { store, expenseForm }
 
-
 const App = () => (
   <Provider { ...stores }>
     <div className='container' style={{ padding:'20px' }}>
@@ -26,15 +25,13 @@ const App = () => (
           <ExpenseList />
         </div>
         <div className="column col-3">
-          <ExpenseForm />
-          <br/> <br/> <br/>
-          <SpenderForm />
+          <TotalsReport />
         </div>
       </div>
+      <ExpenseForm />
     </div>
   </Provider>
 )
-
 
 render(
   <div>
@@ -48,5 +45,3 @@ store.addSpender('Dave')
 store.addSpender('Andy')
 store.addExpense(22.5, 'Petrol', 'Andy')
 store.addExpense(7.5, 'Lollies', 'Dave')
-
-window.store = store;

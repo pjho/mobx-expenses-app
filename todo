@@ -1,3 +1,5 @@
-SpendersModel
-ExpenseModel
-ExpenseListModel
+- persist state
+  º Local storage
+- tidy reports
+  º add total
+  º add reconciliation requirements
