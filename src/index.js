@@ -8,14 +8,18 @@ import { ExpenseForm } from './components/ExpenseForm'
 import { SpenderForm } from './components/SpenderForm'
 
 import { ExpenseListModel } from './models/ExpenseListModel'
+import { ExpenseFormModel } from './models/ExpenseFormModel'
 
 
 
 const store = new ExpenseListModel();
+const expenseForm = new ExpenseFormModel();
+
+const stores = { store, expenseForm }
 
 
 const App = () => (
-  <Provider store={ store }>
+  <Provider { ...stores }>
     <div className='container' style={{ padding:'20px' }}>
       <div className="columns">
         <div className="column col-9">
