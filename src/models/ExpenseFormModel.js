@@ -1,6 +1,6 @@
 import { observable, action } from "mobx";
 
-export class ExpenseFormModel {
+class ExpenseFormModel {
   @observable visible = false
   @observable amount = ''
   @observable description = ''
@@ -39,3 +39,5 @@ export class ExpenseFormModel {
       this.visible = true
   }
 }
+
+export const expenseForm = new ExpenseFormModel()

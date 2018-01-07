@@ -22,7 +22,7 @@ export const Expense = inject('store', 'expenseForm')(({ expense, store, expense
           </button>
           <button
             className='btn btn-sm btn-error'
-            onClick={ () => confirmAndDelete(description, () => store.deleteExpense(id)) }
+            onClick={ () => confirmAndDelete(description, () => store.deleteExpense(expense)) }
           >
             delete
           </button>

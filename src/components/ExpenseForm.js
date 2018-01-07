@@ -75,6 +75,7 @@ export class ExpenseForm extends Component {
             placeholder='Amount'
             className="form-input"
             type="number"
+            step="0.01"
           />
           <br />
           <input

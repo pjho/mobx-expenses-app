@@ -15,7 +15,7 @@ export class TotalsReport extends Component {
           { this.props.store.spenders.map(spender => (
               <div key={ spender } style={{marginRight: '10px'}}>
                 <strong>{ spender }: </strong>
-                ${ this.props.store.totalSpendForUser(spender) }
+                ${ this.props.store.totalSpendForSpender(spender) }
               </div>
           ))}
         </div>

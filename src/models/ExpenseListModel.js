@@ -1,16 +1,42 @@
-import { observable, computed, action } from "mobx";
+import { observable, computed, action, autorun } from "mobx";
 
 import { ExpenseModel } from "./ExpenseModel";
 
-export class ExpenseListModel {
+class ExpenseListModel {
   @observable expenses = [];
   @observable spenders = [];
 
+  constructor() {
+    const storedVals = localStorage.getItem('mobx-expense-tracker')
+    if (storedVals) {
+      const { spenders, expenses } = JSON.parse(storedVals)
+
+      if (spenders) {
+        this.spenders = spenders
+      }
+      if (expenses) {
+        this.expenses = expenses.map(exp => new ExpenseModel(exp.amount, exp.description, exp.spender))
+      }
+    }
+
+    autorun(() => {
+      localStorage.setItem('mobx-expense-tracker', JSON.stringify({
+        expenses: this.expenses,
+        spenders: this.spenders,
+      }))
+    })
+
+  }
+
   // @computed
-  totalSpendForUser(spender) {
+  totalSpendForSpender(spender) {
     return this.expenses
       .filter(ex => ex.spender === spender)
       .reduce((total, ex) => (total + ex.amount), 0)
+  }
+
+  expenseCountForSpender(spender) {
+    return this.expenses.filter(exp => exp.spender === spender).length
   }
 
   @action
@@ -31,24 +57,30 @@ export class ExpenseListModel {
   }
 
   @action
-  deleteExpense(id) {
+  deleteExpense({ id, spender }) {
     const idx = this.expenses.findIndex(exp => exp.id === id)
+
     if (idx > -1) {
       this.expenses.splice(idx, 1)
+    }
+
+    if (this.expenseCountForSpender(spender) === 0) {
+      this.deleteSpender(spender)
     }
   }
 
   @action
   addSpender(name) {
-    this.spenders = this.spenders.concat([name]).sort()
+    if (this.spenders.indexOf(name) === -1) {
+      this.spenders = this.spenders.concat([name]).sort()
+    }
   }
 
   @action
   deleteSpender(name) {
-    // this.spenders.remove(name)
-    const idx = this.spenders.indexOf(name)
-    if (idx > -1) {
-      this.spenders.splice(idx, 1)
-    }
+    this.spenders.remove(name)
   }
 }
+
+export const store = new ExpenseListModel()
+

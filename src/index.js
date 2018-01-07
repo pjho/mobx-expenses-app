@@ -7,13 +7,8 @@ import { ExpenseList } from './components/ExpenseList'
 import { ExpenseForm } from './components/ExpenseForm'
 import { TotalsReport } from './components/TotalsReport'
 
-import { ExpenseListModel } from './models/ExpenseListModel'
-import { ExpenseFormModel } from './models/ExpenseFormModel'
-
-
-
-const store = new ExpenseListModel();
-const expenseForm = new ExpenseFormModel();
+import { store } from './models/ExpenseListModel'
+import { expenseForm } from './models/ExpenseFormModel'
 
 const stores = { store, expenseForm }
 
@@ -41,7 +36,3 @@ render(
   document.getElementById("root")
 );
 
-store.addSpender('Dave')
-store.addSpender('Andy')
-store.addExpense(22.5, 'Petrol', 'Andy')
-store.addExpense(7.5, 'Lollies', 'Dave')
