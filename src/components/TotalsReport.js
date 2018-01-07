@@ -8,14 +8,43 @@ import { Expense } from './Expense'
 @observer
 export class TotalsReport extends Component {
   render() {
+    const { store } = this.props
     return (
       <div>
         <h4>Report</h4>
+        <table className='table'>
+          <tbody>
+            <tr>
+              <td><strong>Total Spend: </strong></td>
+              <td className='text-right'>{ store.totalSpend.toFixed(2) }</td>
+            </tr>
+            <tr>
+              <td><strong>Per Spender: </strong></td>
+              <td className='text-right'>{ store.totalSpendPerSpender.toFixed(2) }</td>
+            </tr>
+          </tbody>
+        </table>
         <div>
-          { this.props.store.spenders.map(spender => (
-              <div key={ spender } style={{marginRight: '10px'}}>
-                <strong>{ spender }: </strong>
-                ${ this.props.store.totalSpendForSpender(spender) }
+          { store.spenders.map(spender => (
+              <div key={ spender } style={{marginTop: '20px'}}>
+                <table className='table'>
+                  <thead>
+                    <tr>
+                      <th>{ spender }</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Spent: </strong></td>
+                      <td className='text-right'>${ store.totalSpendForSpender(spender).toFixed(2) }</td>
+                    </tr>
+                      <tr>
+                      <td><strong>Owes: </strong></td>
+                      <td className='text-right'>${ (store.totalSpendForSpender(spender) - store.totalSpendPerSpender).toFixed(2) }</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
           ))}
         </div>

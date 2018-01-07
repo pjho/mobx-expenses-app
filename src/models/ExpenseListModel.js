@@ -28,7 +28,21 @@ class ExpenseListModel {
 
   }
 
-  // @computed
+  @computed
+  get totalSpend() {
+    return this.expenses.reduce((total, ex) => (total + ex.amount), 0)
+  }
+
+  @computed
+  get totalSpendPerSpender() {
+    return this.totalSpend / this.spenderCount
+  }
+
+  @computed
+  get spenderCount() {
+    return this.spenders.length
+  }
+
   totalSpendForSpender(spender) {
     return this.expenses
       .filter(ex => ex.spender === spender)
@@ -82,4 +96,3 @@ class ExpenseListModel {
 }
 
 export const store = new ExpenseListModel()
-
