@@ -33,8 +33,8 @@ export class ExpenseForm extends Component {
       return window.alert('You need to enter all the values.')
     }
 
-    id ? store.updateExpense(id, amount, description, spender)
-       : store.addExpense(amount, description, spender)
+    id ? store.updateExpense({ id, amount, description, spender })
+       : store.addExpense({ amount, description, spender })
 
      this.resetForm()
   }

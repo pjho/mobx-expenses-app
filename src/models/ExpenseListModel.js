@@ -15,7 +15,7 @@ class ExpenseListModel {
         this.spenders = spenders
       }
       if (expenses) {
-        this.expenses = expenses.map(exp => new ExpenseModel(exp.amount, exp.description, exp.spender))
+        this.expenses = expenses.map(exp => new ExpenseModel({ ...exp }))
       }
     }
 
@@ -40,20 +40,19 @@ class ExpenseListModel {
   }
 
   @action
-  addExpense(amount, description, spender) {
-    this.expenses.push(new ExpenseModel(amount, description, spender));
+  addExpense(expense) {
+    this.expenses.push(new ExpenseModel(expense));
   }
 
   @action
-  updateExpense(id, amount, description, spender) {
+  updateExpense({ id, amount, description, spender }) {
     let idx = this.expenses.findIndex(exp => exp.id === id)
-    let expense = this.expenses.find(exp => exp.id === id)
-    expense.amount = +amount
-    expense.description = description
-    expense.spender = spender
-    if (expense) {
-      this.expenses.splice(idx, 1, expense);
+    if (idx === -1) {
+      throw new Error('Expense does not exist.')
     }
+    this.expenses[idx].amount = +amount
+    this.expenses[idx].description = description
+    this.expenses[idx].spender = spender
   }
 
   @action

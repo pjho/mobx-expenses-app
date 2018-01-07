@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { inject } from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 
 
 const confirmAndDelete = (description, deleteCB) => {
@@ -8,7 +8,7 @@ const confirmAndDelete = (description, deleteCB) => {
   }
 }
 
-export const Expense = inject('store', 'expenseForm')(({ expense, store, expenseForm }) => {
+export const Expense = inject('store', 'expenseForm')(observer(({ expense, store, expenseForm }) => {
   const { amount, description, spender, id } = expense
   return (
     <tr>
@@ -30,4 +30,4 @@ export const Expense = inject('store', 'expenseForm')(({ expense, store, expense
       </td>
     </tr>
   )}
-)
+))
