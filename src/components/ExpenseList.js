@@ -23,10 +23,10 @@ export class ExpenseList extends Component {
         <table className="table table-striped table-hover">
           <thead>
             <tr>
-              <th>Amount</th>
-              <th>Description</th>
-              <th>Spender</th>
-              <th></th>
+              <th className="bg-dark">Amount</th>
+              <th className="bg-dark">Description</th>
+              <th className="bg-dark">Spender</th>
+              <th className="bg-dark"></th>
             </tr>
           </thead>
           <tbody>

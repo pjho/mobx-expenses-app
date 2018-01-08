@@ -4,6 +4,27 @@ import { observer, inject } from "mobx-react";
 
 import { Expense } from './Expense'
 
+
+
+
+const Spender = inject('store')(observer(({ spender, store }) => {
+  const spent = store.totalSpendForSpender(spender)
+  const owes = Math.round(store.totalSpendPerSpender - spent)
+
+  return (
+    <tr key={ spender }>
+      <td>
+        <strong>{ spender }</strong><strong className='float-right'>${ spent.toFixed(2) }</strong>
+      </td>
+      <td className={ owes > 0 ? 'bg-dark' : 'bg-success'}>
+        { owes >= 0 ? 'Owes' : 'Is Owed' }: <strong className='float-right'>${ Math.abs(owes).toFixed(2) }</strong>
+      </td>
+    </tr>
+  )
+}))
+
+
+
 @inject('store')
 @observer
 export class TotalsReport extends Component {
@@ -11,43 +32,26 @@ export class TotalsReport extends Component {
     const { store } = this.props
     return (
       <div>
-        <h4>Report</h4>
+        <h4>Expense Report</h4>
         <table className='table'>
           <tbody>
             <tr>
-              <td><strong>Total Spend: </strong></td>
-              <td className='text-right'>{ store.totalSpend.toFixed(2) }</td>
-            </tr>
-            <tr>
-              <td><strong>Per Spender: </strong></td>
-              <td className='text-right'>{ store.totalSpendPerSpender.toFixed(2) }</td>
+              <td className="bg-primary">Total: <strong>${ store.totalSpend.toFixed(2) }</strong></td>
+              <td className='text-right bg-primary'>Each: <strong>${ store.totalSpendPerSpender.toFixed(2) }</strong></td>
             </tr>
           </tbody>
         </table>
-        <div>
-          { store.spenders.map(spender => (
-              <div key={ spender } style={{marginTop: '20px'}}>
-                <table className='table'>
-                  <thead>
-                    <tr>
-                      <th>{ spender }</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><strong>Spent: </strong></td>
-                      <td className='text-right'>${ store.totalSpendForSpender(spender).toFixed(2) }</td>
-                    </tr>
-                      <tr>
-                      <td><strong>Owes: </strong></td>
-                      <td className='text-right'>${ (store.totalSpendForSpender(spender) - store.totalSpendPerSpender).toFixed(2) }</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-          ))}
-        </div>
+          <table className='table table-striped_ compact'>
+            <thead>
+              <tr>
+                <th className="bg-gray">Spent</th>
+                <th className='text-right bg-gray'>+/-</th>
+              </tr>
+            </thead>
+            <tbody>
+              { store.spenders.map((spender) => <Spender key={ spender } spender={ spender } />) }
+            </tbody>
+          </table>
       </div>
     )
   }
