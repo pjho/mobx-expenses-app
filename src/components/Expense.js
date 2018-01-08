@@ -17,14 +17,15 @@ export const Expense = inject('store', 'expenseForm')(observer(({ expense, store
       <td>{ spender }</td>
       <td className='text-right'>
         <div className="btn-group">
-          <button className='btn btn-sm btn-primary' onClick={ () => expenseForm.populate(expense) }>
-            edit
+          <button className='btn btn-sm' title='edit expense' onClick={ () => expenseForm.populate(expense) }>
+            <i className="icon icon-edit"></i>
           </button>
           <button
-            className='btn btn-sm btn-error'
+            className='btn btn-sm'
+            title='delete expense'
             onClick={ () => confirmAndDelete(description, () => store.deleteExpense(expense)) }
           >
-            delete
+            <i className="icon icon-delete"></i>
           </button>
         </div>
       </td>

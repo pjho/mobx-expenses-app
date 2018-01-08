@@ -4,9 +4,6 @@ import { observer, inject } from "mobx-react";
 
 import { Expense } from './Expense'
 
-
-
-
 const Spender = inject('store')(observer(({ spender, store }) => {
   const spent = store.totalSpendForSpender(spender)
   const owes = Math.round(store.totalSpendPerSpender - spent)
@@ -24,35 +21,34 @@ const Spender = inject('store')(observer(({ spender, store }) => {
 }))
 
 
-
 @inject('store')
 @observer
 export class TotalsReport extends Component {
   render() {
     const { store } = this.props
     return (
-      <div>
+      <Fragment>
         <h4>Expense Report</h4>
         <table className='table'>
           <tbody>
             <tr>
-              <td className="bg-primary">Total: <strong>${ store.totalSpend.toFixed(2) }</strong></td>
-              <td className='text-right bg-primary'>Each: <strong>${ store.totalSpendPerSpender.toFixed(2) }</strong></td>
+              <td className="bg-dark">Total: <strong>${ store.totalSpend.toFixed(2) }</strong></td>
+              <td className='text-right bg-dark'>Each: <strong>${ store.totalSpendPerSpender.toFixed(2) }</strong></td>
             </tr>
           </tbody>
         </table>
-          <table className='table table-striped_ compact'>
-            <thead>
-              <tr>
-                <th className="bg-gray">Spent</th>
-                <th className='text-right bg-gray'>+/-</th>
-              </tr>
-            </thead>
-            <tbody>
-              { store.spenders.map((spender) => <Spender key={ spender } spender={ spender } />) }
-            </tbody>
-          </table>
-      </div>
+        <table className='table compact'>
+          <thead>
+            <tr>
+              <th className="bg-gray">Spent</th>
+              <th className='text-right bg-gray'>+/-</th>
+            </tr>
+          </thead>
+          <tbody>
+            { store.spenders.map((spender) => <Spender key={ spender } spender={ spender } />) }
+          </tbody>
+        </table>
+      </Fragment>
     )
   }
 }

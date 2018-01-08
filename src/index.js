@@ -14,7 +14,10 @@ const stores = { store, expenseForm }
 
 const App = () => (
   <Provider { ...stores }>
-    <div className='container' style={{ padding:'20px' }}>
+    <div className='container' style={{ padding:'0 20px 20px' }}>
+      <header className="bg-dark">
+        <h1>Expense Tracker</h1>
+      </header>
       <div className="columns">
         <div className="column col-9">
           <ExpenseList />
