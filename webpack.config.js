@@ -1,18 +1,23 @@
 var path = require('path');
 var webpack = require('webpack');
 
+const PROD = process.env.NODE_ENV === 'production'
+
 module.exports = {
-  devtool: 'eval',
-  entry: [
-    './src/index'
-  ],
+  devtool: PROD ? false : 'eval',
+  entry: ['./src/index'],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: __dirname,
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: '/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      },
+    }),
   ],
   resolve: {
     extensions: ['.js', '.jsx']
@@ -25,3 +30,5 @@ module.exports = {
     }]
   }
 };
+
+
